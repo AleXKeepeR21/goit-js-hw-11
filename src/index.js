@@ -1,36 +1,3 @@
-// ---------------------------------------------------------------
-
-// // import { galleryItems } from './gallery-items';
-// import SimpleLightbox from 'simplelightbox';
-// import 'simplelightbox/dist/simple-lightbox.min.css';
-
-// const galleryRef = document.querySelector('.gallery');
-
-// const galleryMarkup = createGalleryItemMarkup(galleryItems);
-// galleryRef.insertAdjacentHTML('beforeend', galleryMarkup);
-
-// function createGalleryItemMarkup(galleryItems) {
-//   return galleryItems
-//     .map(({ preview, original, description }) => {
-//       return `
-//         <div class="gallery__item">
-//             <a class="gallery__item" href="${original}">
-//                 <img class="gallery__image"
-//                 src="${preview}"
-//                 alt="${description}" />
-//             </a>
-//         </div>
-//       `;
-//     })
-//     .join('');
-// }
-
-// new SimpleLightbox('.gallery a', {
-//   captionsData: 'alt',
-//   captionPosition: 'bottom',
-//   captionDelay: 250,
-// });
-
 import './css/styles.css';
 import ApiService from './api-service';
 import SimpleLightbox from 'simplelightbox';
@@ -42,7 +9,6 @@ const galleryContainer = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
 
 const apiService = new ApiService();
-// let searchQuery = '';
 
 searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.addEventListener('click', onLoadMore);
@@ -95,9 +61,7 @@ function createGalleryItemMarkup(hits) {
                 alt="${tags}" 
                 loading="lazy"/>
             </a>
-            
-        
-
+ 
         <div class="info">
     <p class="info__item">
         <b>Likes:</b>
