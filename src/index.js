@@ -95,7 +95,8 @@ function createGalleryItemMarkup(hits) {
                 alt="${tags}" 
                 loading="lazy"/>
             </a>
-        </div>
+            
+        
 
         <div class="info">
     <p class="info__item">
