@@ -39,6 +39,7 @@ function appendHitsMarkup(hits) {
     'beforeend',
     createGalleryItemMarkup(hits)
   );
+  galleryLightbox.refresh();
 }
 
 function createGalleryItemMarkup(hits) {
@@ -93,7 +94,7 @@ function clearGalleryContainer() {
   galleryContainer.innerHTML = '';
 }
 
-new SimpleLightbox('.gallery a', {
+let galleryLightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionPosition: 'bottom',
   captionDelay: 250,
