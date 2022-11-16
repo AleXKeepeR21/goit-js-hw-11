@@ -39,7 +39,7 @@ body {
 }
 
 .gallery__image {
-  height: 70%;
+  height: 75%;
   width: 100%;
   object-fit: cover;
   transition: transform var(--animation-duration) var(--timing-function);
@@ -58,4 +58,8 @@ body {
 .info {
   display: flex;
   gap: 5px;
+  padding: 0 5px 0 5px;
+}
+p.info__item {
+  margin: 0;
 }
