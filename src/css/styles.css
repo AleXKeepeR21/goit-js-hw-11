@@ -63,3 +63,22 @@ body {
 p.info__item {
   margin: 0;
 }
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 10px 0;
+  background-color: rgb(114, 114, 250);
+}
+
+.load-more {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 20px 5px 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  background-color: rgb(114, 114, 250);
+  color: #fafafa;
+}
