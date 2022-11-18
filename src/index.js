@@ -3,6 +3,8 @@ import ApiService from './api-service';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import 'notiflix/dist/notiflix-3.2.5.min.css';
 
 const searchForm = document.querySelector('.search-form');
 const galleryContainer = document.querySelector('.gallery');
@@ -49,20 +51,22 @@ function onSearch(evt) {
 
 function onLoadMore() {
   apiService.fetchArticles().then(data => {
-    decreaseTotalHits();
-    console.log(decreaseTotalHits());
-    if (apiService.totalHits < 40) {
-      loadMoreBtn.classList.add('hidden');
+    // apiService.decreaseTotalHits();
+    // console.log(apiService.decreaseTotalHits());
+    const totalPages = Math.floor(data.totalHits / 40);
+    if (apiService.page > totalPages) {
       Notify.failure(
         `We're sorry, but you've reached the end of search results.`
       );
+
+      loadMoreBtn.classList.add('hidden');
     }
-    // decreaseTotalHits();
+    // apiService.decreaseTotalHits();
     // console.log(apiService.decreaseTotalHits());
 
     if (data.totalHits > 0) {
       appendHitsMarkup(data.hits);
-      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+      // Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     }
   });
 }

@@ -2,7 +2,8 @@ export default class ApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
-    this.totalHits = null;
+    // this.totalHits = null;
+    this.totalPages = null;
   }
 
   fetchArticles() {
@@ -20,17 +21,17 @@ export default class ApiService {
         console.log(data);
         this.page += 1;
         return data;
-      })
-      .catch(error => console.log(error));
+      });
+    // .catch(error => console.log(error));
   }
 
   resetPage() {
     this.page = 1;
   }
 
-  decreaseTotalHits() {
-    this.totalHits = this.totalHits - 40;
-  }
+  // decreaseTotalHits() {
+  //   this.totalHits = this.totalHits - 40;
+  // }
 
   get query() {
     return this.searchQuery;
