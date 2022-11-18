@@ -2,6 +2,7 @@ export default class ApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
+    this.totalHits = null;
   }
 
   fetchArticles() {
@@ -25,6 +26,10 @@ export default class ApiService {
 
   resetPage() {
     this.page = 1;
+  }
+
+  decreaseTotalHits() {
+    this.totalHits = this.totalHits - 40;
   }
 
   get query() {

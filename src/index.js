@@ -10,8 +10,6 @@ const loadMoreBtn = document.querySelector('.load-more');
 loadMoreBtn.classList.add('hidden');
 const apiService = new ApiService();
 
-let totalHits = null;
-
 searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.addEventListener('click', onLoadMore);
 
@@ -29,7 +27,10 @@ function onSearch(evt) {
     return;
   } else {
     apiService.resetPage();
+
     apiService.fetchArticles().then(data => {
+      apiService.totalHits = data.totalHits;
+      console.log(apiService.totalHits);
       if (data.totalHits === 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
@@ -48,18 +49,18 @@ function onSearch(evt) {
 
 function onLoadMore() {
   apiService.fetchArticles().then(data => {
-    totalHits = data.totalHits - 40;
-
-    if (data.totalHits > 0) {
-      appendHitsMarkup(data.hits);
-      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-    }
-
-    if (totalHits < 0) {
+    if (apiService.totalHits < 40) {
       loadMoreBtn.classList.add('hidden');
       Notify.failure(
         `We're sorry, but you've reached the end of search results.`
       );
+    }
+    // decreaseTotalHits();
+    // apiService.decreaseTotalHits();
+
+    if (data.totalHits > 0) {
+      appendHitsMarkup(data.hits);
+      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     }
   });
 }
