@@ -49,6 +49,8 @@ function onSearch(evt) {
 
 function onLoadMore() {
   apiService.fetchArticles().then(data => {
+    decreaseTotalHits();
+    console.log(decreaseTotalHits());
     if (apiService.totalHits < 40) {
       loadMoreBtn.classList.add('hidden');
       Notify.failure(
@@ -56,7 +58,7 @@ function onLoadMore() {
       );
     }
     // decreaseTotalHits();
-    // apiService.decreaseTotalHits();
+    // console.log(apiService.decreaseTotalHits());
 
     if (data.totalHits > 0) {
       appendHitsMarkup(data.hits);
