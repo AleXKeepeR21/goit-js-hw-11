@@ -1,6 +1,5 @@
 import './css/styles.css';
 import ApiService from './api-service';
-import LoadMoreBtn from './load-more-btn';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
@@ -8,10 +7,10 @@ import Notiflix from 'notiflix';
 const searchForm = document.querySelector('.search-form');
 const galleryContainer = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
-
+loadMoreBtn.classList.add('hidden');
 const apiService = new ApiService();
 
-// const loadMoreBtn = new LoadMoreBtn({ selector: '[data-action="load-more"]' });
+let totalHits = null;
 
 searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.addEventListener('click', onLoadMore);
@@ -31,27 +30,38 @@ function onSearch(evt) {
   } else {
     apiService.resetPage();
     apiService.fetchArticles().then(data => {
-      console.log(data);
       if (data.totalHits === 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
       }
       if (data.totalHits > 0) {
-        galleryContainer.insertAdjacentHTML(
-          'beforeend',
-          createGalleryItemMarkup(data.hits)
-        );
-        galleryLightbox.refresh();
-        // appendHitsMarkup();
+        appendHitsMarkup(data.hits);
         Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+      }
+      if (data.hits.length >= 40) {
+        loadMoreBtn.classList.remove('hidden');
       }
     });
   }
 }
 
 function onLoadMore() {
-  apiService.fetchArticles().then(appendHitsMarkup);
+  apiService.fetchArticles().then(data => {
+    totalHits = data.totalHits - 40;
+
+    if (data.totalHits > 0) {
+      appendHitsMarkup(data.hits);
+      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+    }
+
+    if (totalHits < 0) {
+      loadMoreBtn.classList.add('hidden');
+      Notify.failure(
+        `We're sorry, but you've reached the end of search results.`
+      );
+    }
+  });
 }
 
 function appendHitsMarkup(hits) {

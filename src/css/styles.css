@@ -82,3 +82,7 @@ p.info__item {
   background-color: rgb(114, 114, 250);
   color: #fafafa;
 }
+
+.hidden {
+  opacity: 0;
+}
