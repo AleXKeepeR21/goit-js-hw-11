@@ -70,6 +70,7 @@ async function onLoadMore() {
 
       if (data.totalHits > 0) {
         appendHitsMarkup(data.hits);
+        slowMotion();
       }
     });
   } catch (error) {
@@ -142,3 +143,14 @@ let galleryLightbox = new SimpleLightbox('.gallery a', {
   captionPosition: 'bottom',
   captionDelay: 250,
 });
+
+function slowMotion() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+  //when draw new markup - do one scrol < 2 height card
+  window.scrollBy({
+    top: cardHeight * 1.8,
+    behavior: 'smooth',
+  });
+}
