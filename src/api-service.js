@@ -1,37 +1,52 @@
+const axios = require('axios').default;
 export default class ApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
-    // this.totalHits = null;
     this.totalPages = null;
   }
 
-  fetchArticles() {
+  async fetchArticles() {
     console.log(this);
-    return fetch(
-      `https://pixabay.com/api/?key=31213831-079e96808e6f65bd38889e682&q=${this.searchQuery}&per_page=40&page=${this.page}&image_type=photo&orientation=horizontal&safesearch=true`
-    )
+    const BASE_URL = 'https://pixabay.com/api/';
+    const API_KEY = '31213831-079e96808e6f65bd38889e682';
+    const FILTERS = '&image_type=photo&orientation=horizontal&safesearch=true';
+    const PAGINATION = `&per_page=40&page=${this.page}`;
+    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}${FILTERS}${PAGINATION}`;
+
+    return await axios
+      .get(url)
       .then(response => {
         if (!response.ok) {
           throw new Error(response.status);
         }
-        return response.json();
+        return response;
       })
       .then(data => {
         console.log(data);
         this.page += 1;
         return data;
       });
-    // .catch(error => console.log(error));
+
+    // return fetch(
+    //   `https://pixabay.com/api/?key=31213831-079e96808e6f65bd38889e682&q=${this.searchQuery}&per_page=40&page=${this.page}&image_type=photo&orientation=horizontal&safesearch=true`
+    // )
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error(response.status);
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     console.log(data);
+    //     this.page += 1;
+    //     return data;
+    //   });
   }
 
   resetPage() {
     this.page = 1;
   }
-
-  // decreaseTotalHits() {
-  //   this.totalHits = this.totalHits - 40;
-  // }
 
   get query() {
     return this.searchQuery;
